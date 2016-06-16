@@ -24,4 +24,4 @@ _testmain.go
 *.prof
 
 # vim 
-.swp
+*.swp
