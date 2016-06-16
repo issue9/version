@@ -16,6 +16,20 @@ version.Parse(ver, "2.1+160616")
 // ver.Major == 2, ver.Minor == 1, ver.Build == 160616
 ```
 
+同时也定义了一个 [semver](http://semver.org) 的一个内部实现。
+```go
+semver,err := version.SemVer("2.10.1+build")
+if err != nil{
+    // TODO
+}
+
+fmt.Println(semver)
+// semver.Major == 2
+// semver.Minor == 10
+// semver.Patch == 1
+// semver.Build == build
+```
+
 
 ### 安装
 
