@@ -76,6 +76,34 @@ func (v *SemVersion) Compare(v2 *SemVersion) int {
 	return 0
 }
 
+// 将当前对象与一个版本号字符串相比较。其返回值的功能与 Compare 相同
+func (v *SemVersion) CompareString(ver string) (int, error) {
+	v2, err := SemVer(ver)
+	if err != nil {
+		return 0, err
+	}
+
+	return v.Compare(v2), nil
+}
+
+// 当前对象与 v2 是否兼容。
+// semver 规定主版本号相同的，在 API 层面必须兼容。
+func (v *SemVersion) Compatible(v2 *SemVersion) bool {
+	return v.Major == v2.Major
+}
+
+// 当前对象与版本号字符串是否兼容。
+// semver 规定主版本号相同的，在 API 层面必须兼容。
+func (v *SemVersion) CompatibleString(ver string) (bool, error) {
+	v2, err := SemVer(ver)
+	if err != nil {
+		return false, err
+	}
+
+	return v.Compatible(v2), nil
+}
+
+// 转换成版本号字符串
 func (v *SemVersion) String() string {
 	buf := bytes.NewBufferString(strconv.Itoa(v.Major))
 	buf.WriteByte('.')
@@ -95,6 +123,7 @@ func (v *SemVersion) String() string {
 	return buf.String()
 }
 
+// 将一个版本号字符串解析成 SemVersion 对象
 func SemVer(ver string) (*SemVersion, error) {
 	semver := &SemVersion{}
 
@@ -104,17 +133,21 @@ func SemVer(ver string) (*SemVersion, error) {
 	return semver, nil
 }
 
-// 比较两个 semver 版本号
+// 比较两个 semver 版本号字符串
 func SemVerCompare(ver1, ver2 string) (int, error) {
 	v1, err := SemVer(ver1)
 	if err != nil {
 		return 0, err
 	}
 
-	v2, err := SemVer(ver2)
+	return v1.CompareString(ver2)
+}
+
+func SemVerCompatible(ver1, ver2 string) (bool, error) {
+	v1, err := SemVer(ver1)
 	if err != nil {
-		return 0, err
+		return false, err
 	}
 
-	return v1.Compare(v2), nil
+	return v1.CompatibleString(ver2)
 }

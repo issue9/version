@@ -53,6 +53,44 @@ func TestSemVersion_Compare(t *testing.T) {
 	a.True(v1.Compare(v2) > 0)
 }
 
+func TestSemVersion_CompareString(t *testing.T) {
+	a := assert.New(t)
+
+	v1 := &SemVersion{
+		Major: 1,
+		Minor: 2,
+		Patch: 3,
+	}
+
+	ret, err := v1.CompareString("1.2.2+build")
+	a.NotError(err).True(ret > 0)
+
+	ret, err = v1.CompareString("1.2.3+build")
+	a.NotError(err).True(ret == 0)
+
+	ret, err = v1.CompareString("1.2.3-alpha+build")
+	a.NotError(err).True(ret < 0)
+
+	ret, err = v1.CompareString("1.2.3-alpha")
+	a.NotError(err).True(ret < 0)
+}
+
+func TestSemVersion_CompatibleString(t *testing.T) {
+	a := assert.New(t)
+
+	v1 := &SemVersion{
+		Major: 1,
+		Minor: 2,
+		Patch: 3,
+	}
+
+	ret, err := v1.CompatibleString("1.2.2+build")
+	a.NotError(err).True(ret)
+
+	ret, err = v1.CompatibleString("0.2.2+build")
+	a.NotError(err).False(ret)
+}
+
 func TestSemVersion_String(t *testing.T) {
 	a := assert.New(t)
 
@@ -88,4 +126,14 @@ func TestSemVerCompare(t *testing.T) {
 
 	v, err = SemVerCompare("1.2.0", "1.2.1")
 	a.NotError(err).True(v < 0)
+}
+
+func TestSemVerCompatible(t *testing.T) {
+	a := assert.New(t)
+
+	ret, err := SemVerCompatible("1.0.0", "1.0.0")
+	a.NotError(err).True(ret)
+
+	ret, err = SemVerCompatible("0.0.0", "1.0.0")
+	a.NotError(err).False(ret)
 }
