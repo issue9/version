@@ -29,15 +29,9 @@ func (v *SemVersion) Compare(v2 *SemVersion) int {
 	case v.Patch != v2.Patch:
 		return v.Patch - v2.Patch
 	case len(v.PreRelease) == 0:
-		if len(v2.PreRelease) > 0 {
-			return 1
-		}
-		return 0
+		return len(v2.PreRelease) // v2.PreRelease 只有内容，就比 v 的版本号小
 	case len(v2.PreRelease) == 0:
-		if len(v.PreRelease) > 0 {
-			return -1
-		}
-		return 0
+		return -len(v.PreRelease) // v.PreRelease 只有内容，就比 v2 的版本号小
 	}
 
 	// pre-release 的比较，按照 semver 的规则：

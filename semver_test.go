@@ -69,10 +69,10 @@ func TestSemVersion_CompareString(t *testing.T) {
 	a.NotError(err).True(ret == 0)
 
 	ret, err = v1.CompareString("1.2.3-alpha+build")
-	a.NotError(err).True(ret < 0)
+	a.NotError(err).True(ret > 0)
 
 	ret, err = v1.CompareString("1.2.3-alpha")
-	a.NotError(err).True(ret < 0)
+	a.NotError(err).True(ret > 0)
 }
 
 func TestSemVersion_CompatibleString(t *testing.T) {
