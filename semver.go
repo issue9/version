@@ -145,3 +145,22 @@ func SemVerCompatible(ver1, ver2 string) (bool, error) {
 
 	return v1.CompatibleString(ver2)
 }
+
+// 验证 semver 版本号是否符合 semver 规范。
+func SemVerValid(ver string) bool {
+	v := &SemVersion{
+		Major: -1,
+		Minor: -1,
+		Patch: -1,
+	}
+
+	if err := Parse(v, ver); err != nil {
+		return false
+	}
+
+	if v.Major == -1 || v.Minor == -1 || v.Patch == -1 {
+		return false
+	}
+
+	return true
+}

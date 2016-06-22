@@ -137,3 +137,14 @@ func TestSemVerCompatible(t *testing.T) {
 	ret, err = SemVerCompatible("0.0.0", "1.0.0")
 	a.NotError(err).False(ret)
 }
+
+func TestSemVerValid(t *testing.T) {
+	a := assert.New(t)
+
+	a.True(SemVerValid("1.0.0+build"))
+	a.True(SemVerValid("1.1.2-alpha.1"))
+	a.True(SemVerValid("1.1.22-alpha.2.1+build"))
+
+	a.False(SemVerValid("1.1.22.2"))
+	a.False(SemVerValid("1.1.22.2-alpha.2.1+build"))
+}
