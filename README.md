@@ -40,7 +40,7 @@ go get github.com/issue9/version
 
 ### 文档
 
-[![Go Walker](https://gowalker.org/api/v1/badge)](http://gowalker.org/github.com/issue9/version)
+[![Go Walker](https://gowalker.org/api/v1/badge)](https://gowalker.org/github.com/issue9/version)
 [![GoDoc](https://godoc.org/github.com/issue9/version?status.svg)](https://godoc.org/github.com/issue9/version)
 
 
