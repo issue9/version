@@ -10,7 +10,8 @@ import (
 	"strings"
 )
 
-// http://semver.org/lang/zh-CN/
+// SemVersion 是 semver 的定义，
+// 具体可参考：http://semver.org/lang/zh-CN/
 type SemVersion struct {
 	Major      int    `version:"0,number,.1"`
 	Minor      int    `version:"1,number,.2"`
@@ -19,7 +20,7 @@ type SemVersion struct {
 	Build      string `version:"4,string"`
 }
 
-// 比较两个版本号，若相同返回 0，若 v 比较大返回正整数，否则返回负数。
+// Compare 比较两个版本号，若相同返回 0，若 v 比较大返回正整数，否则返回负数。
 func (v *SemVersion) Compare(v2 *SemVersion) int {
 	switch {
 	case v.Major != v2.Major:
@@ -70,7 +71,7 @@ func (v *SemVersion) Compare(v2 *SemVersion) int {
 	return 0
 }
 
-// 将当前对象与一个版本号字符串相比较。其返回值的功能与 Compare 相同
+// CompareString 将当前对象与一个版本号字符串相比较。其返回值的功能与 Compare 相同
 func (v *SemVersion) CompareString(ver string) (int, error) {
 	v2, err := SemVer(ver)
 	if err != nil {
@@ -80,13 +81,13 @@ func (v *SemVersion) CompareString(ver string) (int, error) {
 	return v.Compare(v2), nil
 }
 
-// 当前对象与 v2 是否兼容。
+// Compatible 当前对象与 v2 是否兼容。
 // semver 规定主版本号相同的，在 API 层面必须兼容。
 func (v *SemVersion) Compatible(v2 *SemVersion) bool {
 	return v.Major == v2.Major
 }
 
-// 当前对象与版本号字符串是否兼容。
+// CompatibleString 当前对象与版本号字符串是否兼容。
 // semver 规定主版本号相同的，在 API 层面必须兼容。
 func (v *SemVersion) CompatibleString(ver string) (bool, error) {
 	v2, err := SemVer(ver)
@@ -97,7 +98,7 @@ func (v *SemVersion) CompatibleString(ver string) (bool, error) {
 	return v.Compatible(v2), nil
 }
 
-// 转换成版本号字符串
+// String 转换成版本号字符串
 func (v *SemVersion) String() string {
 	buf := bytes.NewBufferString(strconv.Itoa(v.Major))
 	buf.WriteByte('.')
@@ -117,7 +118,7 @@ func (v *SemVersion) String() string {
 	return buf.String()
 }
 
-// 将一个版本号字符串解析成 SemVersion 对象
+// SemVer 将一个版本号字符串解析成 SemVersion 对象
 func SemVer(ver string) (*SemVersion, error) {
 	semver := &SemVersion{}
 
@@ -127,7 +128,7 @@ func SemVer(ver string) (*SemVersion, error) {
 	return semver, nil
 }
 
-// 比较两个 semver 版本号字符串
+// SemVerCompare 比较两个 semver 版本号字符串
 func SemVerCompare(ver1, ver2 string) (int, error) {
 	v1, err := SemVer(ver1)
 	if err != nil {
@@ -137,6 +138,7 @@ func SemVerCompare(ver1, ver2 string) (int, error) {
 	return v1.CompareString(ver2)
 }
 
+// SemVerCompatible 两个 semver 版本号是否兼容
 func SemVerCompatible(ver1, ver2 string) (bool, error) {
 	v1, err := SemVer(ver1)
 	if err != nil {
@@ -146,7 +148,7 @@ func SemVerCompatible(ver1, ver2 string) (bool, error) {
 	return v1.CompatibleString(ver2)
 }
 
-// 验证 semver 版本号是否符合 semver 规范。
+// SemVerValid 验证 semver 版本号是否符合 semver 规范。
 func SemVerValid(ver string) bool {
 	v := &SemVersion{
 		Major: -1,

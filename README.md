@@ -1,7 +1,7 @@
 version [![Build Status](https://travis-ci.org/issue9/version.svg?branch=master)](https://travis-ci.org/issue9/version)
 ======
 
-通过定义 struct tag 的相头属性，可以解析大部份版本号字符串到一个结构体中。
+通过定义 struct tag 的相关属性，可以解析大部份版本号字符串到一个结构体中。
 
 ```go
 type struct Version {
