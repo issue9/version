@@ -13,11 +13,11 @@ import (
 // SemVersion 是 semver 的定义，
 // 具体可参考：http://semver.org/lang/zh-CN/
 type SemVersion struct {
-	Major      int    `version:"0,number,.1"`
-	Minor      int    `version:"1,number,.2"`
-	Patch      int    `version:"2,number,+4,-3"`
-	PreRelease string `version:"3,string,+4"`
-	Build      string `version:"4,string"`
+	Major      int    `version:"0,.1"`
+	Minor      int    `version:"1,.2"`
+	Patch      int    `version:"2,+4,-3"`
+	PreRelease string `version:"3,+4"`
+	Build      string `version:"4"`
 }
 
 // Compare 比较两个版本号，若相同返回 0，若 v 比较大返回正整数，否则返回负数。

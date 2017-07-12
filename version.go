@@ -6,7 +6,6 @@
 //
 // version 通过 struct tag 的相关定义来解析版本号字符串。包含了以下标签。
 // - index 该字段对应的的编号，也是默认的解析顺序(0 是入口)，只能为整数，唯一；
-// - type 该字段的类型，可以值为 number(数字)、string(字符串)；
 // - route 表示当前字段的结束字符，以及对应的需要跳转到的索引值值。
 // 比如以下定义的结构体：
 //  type struct Version {
@@ -31,18 +30,11 @@ import (
 	"unicode"
 )
 
-// 表示结构体字段的类型，版本号要嘛是字符串，要嘛是数值
-const (
-	fieldTypeNumber = iota
-	fieldTypeString
-)
-
 // 对每个字段的描述
 type field struct {
 	name   string        // 字段名称
-	Type   int           // 该字段的类型，数值或是字符串
-	Routes map[byte]int  // 该字段的路由，根据不同的字符，会跳到不同的元素中解析
-	Value  reflect.Value // 该字段的 reflect.Value 类型，方便设置值。
+	routes map[byte]int  // 该字段的路由，根据不同的字符，会跳到不同的元素中解析
+	value  reflect.Value // 该字段的 reflect.Value 类型，方便设置值。
 }
 
 // Parse 解析版本号字符串到 obj 中。
@@ -60,23 +52,29 @@ func Parse(obj interface{}, ver string) error {
 
 		if i < len(ver) { // 未结束字符串
 			b := ver[i]
-			nextIndex, found = field.Routes[b]
+			nextIndex, found = field.routes[b]
 			if !found {
 				continue
 			}
 		}
 
-		switch field.Type {
-		case fieldTypeNumber:
+		switch field.value.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			n, err := strconv.ParseInt(ver[start:i], 10, 64)
 			if err != nil {
 				return err
 			}
-			field.Value.SetInt(n)
-		case fieldTypeString:
-			field.Value.SetString(ver[start:i])
+			field.value.SetInt(n)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			n, err := strconv.ParseUint(ver[start:i], 10, 64)
+			if err != nil {
+				return err
+			}
+			field.value.SetUint(n)
+		case reflect.String:
+			field.value.SetString(ver[start:i])
 		default:
-			return errors.New("未知道的 fieldType" + strconv.Itoa(field.Type))
+			return errors.New("无效的类型")
 		}
 
 		i++ // 过滤掉当前字符
@@ -104,7 +102,7 @@ func getFields(obj interface{}) (map[int]*field, error) {
 		name := t.Field(i).Name
 
 		tags := strings.Split(t.Field(i).Tag.Get("version"), ",")
-		if len(tags) < 2 {
+		if len(tags) < 1 {
 			return nil, fmt.Errorf("字段[%v]缺少必要的标签元素", name)
 		}
 
@@ -122,27 +120,18 @@ func getFields(obj interface{}) (map[int]*field, error) {
 			return nil, fmt.Errorf("字段[%v]的索引值[%v]已经存在", name, index)
 		}
 
-		// tags[1]
-		field := &field{Routes: make(map[byte]int, 2), name: name}
-		switch tags[1] {
-		case "number":
-			field.Type = fieldTypeNumber
-		case "string":
-			field.Type = fieldTypeString
-		default:
-			return nil, fmt.Errorf("字段[%v]包含无效的标签：%v", name, tags[1])
-		}
+		field := &field{routes: make(map[byte]int, 2), name: name}
 
-		// tags[2...]
-		for _, v := range tags[2:] {
+		// tags[1...]
+		for _, v := range tags[1:] {
 			n, err := strconv.Atoi(v[1:])
 			if err != nil {
 				return nil, err
 			}
-			field.Routes[v[0]] = n
+			field.routes[v[0]] = n
 		}
 
-		field.Value = v.Field(i)
+		field.value = v.Field(i)
 
 		fields[index] = field
 	}
@@ -157,7 +146,7 @@ func getFields(obj interface{}) (map[int]*field, error) {
 // 检测每个元素中的路由项都能找到对应的元素。
 func checkFields(fields map[int]*field) error {
 	for _, field := range fields {
-		for b, index := range field.Routes {
+		for b, index := range field.routes {
 			if _, found := fields[index]; !found {
 				return fmt.Errorf("字段[%v]对应的路由项[%v]的值不存在", field.name, b)
 			}
