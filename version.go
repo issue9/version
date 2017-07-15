@@ -9,9 +9,9 @@
 // - route 表示当前字段的结束字符，以及对应的需要跳转到的索引值值。
 // 比如以下定义的结构体：
 //  type struct Version {
-//      Major int    `version:"0,number,.1,+2"`
-//      Minor int    `version:"1,number,.2"`
-//      Build string `version:"2,number"`
+//      Major int    `version:"0,.1,+2"`
+//      Minor int    `version:"1,.2"`
+//      Build string `version:"2"`
 //  }
 // 在解析时，首先会拿到索引为 0 的字段，也就是 Major，然后对字符串进行
 // 依次比较，如果碰到符号 `.` ，则将前面的字符串转换成数值保存 Major，
@@ -48,14 +48,14 @@ func Parse(obj interface{}, ver string) error {
 	field := fields[0]
 	for i := 0; i < len(ver)+1; i++ {
 		var nextIndex int
-		var found bool
 
 		if i < len(ver) { // 未结束字符串
 			b := ver[i]
-			nextIndex, found = field.routes[b]
+			index, found := field.routes[b]
 			if !found {
 				continue
 			}
+			nextIndex = index
 		}
 
 		switch field.value.Kind() {
