@@ -3,15 +3,11 @@ language: go
 os:
   - linux
   - osx
-  - windows
 
 go:
   - tip
   - "1.10"
   - 1.9
-  - 1.8
-  - 1.7
-  - 1.6
   - 1.5
 
 install:
