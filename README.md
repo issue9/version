@@ -4,7 +4,7 @@ version [![Build Status](https://travis-ci.org/issue9/version.svg?branch=master)
 通过定义 struct tag 的相关属性，可以解析大部份版本号字符串到一个结构体中。
 
 ```go
-type struct Version {
+type Version struct {
     Major int    `version:"0,number,.1"`
     Minor int    `version:"1,number,+2"`
     Build string `version:"2,string"`
