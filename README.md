@@ -1,6 +1,5 @@
 version
 [![Build Status](https://travis-ci.org/issue9/version.svg?branch=master)](https://travis-ci.org/issue9/version)
-[![Build status](https://ci.appveyor.com/api/projects/status/9n8hj0mpl1yjybeq?svg=true)](https://ci.appveyor.com/project/caixw/version)
 ======
 
 通过定义 struct tag 的相关属性，可以解析大部份版本号字符串到一个结构体中。
