@@ -5,7 +5,6 @@
 package version
 
 import (
-	"bytes"
 	"strconv"
 	"strings"
 )
@@ -100,7 +99,8 @@ func (v *SemVersion) CompatibleString(ver string) (bool, error) {
 
 // String 转换成版本号字符串
 func (v *SemVersion) String() string {
-	buf := bytes.NewBufferString(strconv.Itoa(v.Major))
+	var buf strings.Builder
+	buf.WriteString(strconv.Itoa(v.Major))
 	buf.WriteByte('.')
 	buf.WriteString(strconv.Itoa(v.Minor))
 	buf.WriteByte('.')

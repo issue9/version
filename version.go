@@ -103,12 +103,12 @@ func getFields(obj interface{}) (map[int]*field, error) {
 
 		tags := strings.Split(t.Field(i).Tag.Get("version"), ",")
 		if len(tags) < 1 {
-			return nil, fmt.Errorf("字段[%v]缺少必要的标签元素", name)
+			return nil, fmt.Errorf("字段 %s 缺少必要的标签元素", name)
 		}
 
 		// 不可导出
 		if unicode.IsLower(rune(name[0])) {
-			return nil, fmt.Errorf("字段[%v]标记了 version 标记，但无法导出", name)
+			return nil, fmt.Errorf("字段 %s 标记了 version 标记，但无法导出", name)
 		}
 
 		// tags[0]
