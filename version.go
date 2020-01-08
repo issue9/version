@@ -1,6 +1,4 @@
-// Copyright 2016 by caixw, All rights reserved.
-// Use of this source code is governed by a MIT
-// license that can be found in the LICENSE file.
+// SPDX-License-Identifier: MIT
 
 // Package version 是一个通用的版本号解析工具，可以一个版本号字符串解析到一个结构体中。
 //
