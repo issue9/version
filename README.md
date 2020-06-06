@@ -1,8 +1,8 @@
 version
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fissue9%2Fversion%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/issue9/version/goto?ref=master)
-[![Build Status](https://travis-ci.org/issue9/version.svg?branch=master)](https://travis-ci.org/issue9/version)
 [![codecov](https://codecov.io/gh/issue9/version/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/version)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/issue9/version)
 ======
 
 通过定义 struct tag 的相关属性，可以解析大部份版本号字符串到一个结构体中。
@@ -41,12 +41,6 @@ fmt.Println(semver)
 ```shell
 go get github.com/issue9/version
 ```
-
-文档
-----
-
-[![Go Walker](https://gowalker.org/api/v1/badge)](https://gowalker.org/github.com/issue9/version)
-[![GoDoc](https://godoc.org/github.com/issue9/version?status.svg)](https://godoc.org/github.com/issue9/version)
 
 版权
 ----
