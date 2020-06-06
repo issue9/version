@@ -5,6 +5,8 @@ package version
 import (
 	"strconv"
 	"strings"
+
+	"github.com/issue9/errwrap"
 )
 
 // SemVersion 是 semver 的定义，
@@ -97,20 +99,18 @@ func (v *SemVersion) CompatibleString(ver string) (bool, error) {
 
 // String 转换成版本号字符串
 func (v *SemVersion) String() string {
-	var buf strings.Builder
-	buf.WriteString(strconv.Itoa(v.Major))
-	buf.WriteByte('.')
-	buf.WriteString(strconv.Itoa(v.Minor))
-	buf.WriteByte('.')
-	buf.WriteString(strconv.Itoa(v.Patch))
+	var buf errwrap.StringBuilder
+	buf.WString(strconv.Itoa(v.Major)).
+		WByte('.').
+		WString(strconv.Itoa(v.Minor)).
+		WByte('.').
+		WString(strconv.Itoa(v.Patch))
 
 	if len(v.PreRelease) > 0 {
-		buf.WriteByte('-')
-		buf.WriteString(v.PreRelease)
+		buf.WByte('-').WString(v.PreRelease)
 	}
 	if len(v.Build) > 0 {
-		buf.WriteByte('+')
-		buf.WriteString(v.Build)
+		buf.WByte('+').WString(v.Build)
 	}
 
 	return buf.String()
