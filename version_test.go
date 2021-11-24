@@ -5,11 +5,11 @@ package version
 import (
 	"testing"
 
-	"github.com/issue9/assert"
+	"github.com/issue9/assert/v2"
 )
 
 func TestParse(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	semver := &SemVersion{}
 	a.NotError(Parse(semver, "2.3.19")).
@@ -40,7 +40,7 @@ func TestParse(t *testing.T) {
 }
 
 func TestGetFields(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	// 不可导出
 	o1 := &struct {

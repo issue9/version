@@ -5,11 +5,11 @@ package version
 import (
 	"testing"
 
-	"github.com/issue9/assert"
+	"github.com/issue9/assert/v2"
 )
 
 func TestSemVersion_Compare(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	v1 := &SemVersion{
 		Major: 1,
@@ -52,7 +52,7 @@ func TestSemVersion_Compare(t *testing.T) {
 }
 
 func TestSemVersion_CompareString(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	v1 := &SemVersion{
 		Major: 1,
@@ -74,7 +74,7 @@ func TestSemVersion_CompareString(t *testing.T) {
 }
 
 func TestSemVersion_CompatibleString(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	v1 := &SemVersion{
 		Major: 1,
@@ -90,7 +90,7 @@ func TestSemVersion_CompatibleString(t *testing.T) {
 }
 
 func TestSemVersion_String(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	sv := &SemVersion{
 		Major: 1,
@@ -114,7 +114,7 @@ func TestSemVersion_String(t *testing.T) {
 }
 
 func TestSemVerCompare(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	v, err := SemVerCompare("1.0.0", "1.0.0")
 	a.NotError(err).True(v == 0)
@@ -127,7 +127,7 @@ func TestSemVerCompare(t *testing.T) {
 }
 
 func TestSemVerCompatible(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	ret, err := SemVerCompatible("1.0.0", "1.0.0")
 	a.NotError(err).True(ret)
@@ -137,7 +137,7 @@ func TestSemVerCompatible(t *testing.T) {
 }
 
 func TestSemVerValid(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	a.True(SemVerValid("1.0.0+build"))
 	a.True(SemVerValid("1.1.2-alpha.1"))
