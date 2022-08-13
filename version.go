@@ -35,7 +35,7 @@ type field struct {
 	value  reflect.Value // 该字段的 reflect.Value 类型，方便设置值。
 }
 
-// Parse 解析版本号字符串到 obj 中。
+// Parse 解析版本号字符串到 obj 中
 func Parse(obj interface{}, ver string) error {
 	fields, err := getFields(obj)
 	if err != nil {

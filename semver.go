@@ -9,7 +9,8 @@ import (
 	"github.com/issue9/errwrap"
 )
 
-// SemVersion 是 semver 的定义，
+// SemVersion 是 semver 的定义
+//
 // 具体可参考：https://semver.org/lang/zh-CN/
 type SemVersion struct {
 	Major      int    `version:"0,.1"`
@@ -19,7 +20,9 @@ type SemVersion struct {
 	Build      string `version:"4"`
 }
 
-// Compare 比较两个版本号，若相同返回 0，若 v 比较大返回正整数，否则返回负数。
+// Compare 比较两个版本号
+//
+// 若相同返回 0，若 v 比较大返回正整数，否则返回负数。
 func (v *SemVersion) Compare(v2 *SemVersion) int {
 	switch {
 	case v.Major != v2.Major:
@@ -80,13 +83,15 @@ func (v *SemVersion) CompareString(ver string) (int, error) {
 	return v.Compare(v2), nil
 }
 
-// Compatible 当前对象与 v2 是否兼容。
+// Compatible 当前对象与 v2 是否兼容
+//
 // semver 规定主版本号相同的，在 API 层面必须兼容。
 func (v *SemVersion) Compatible(v2 *SemVersion) bool {
 	return v.Major == v2.Major
 }
 
-// CompatibleString 当前对象与版本号字符串是否兼容。
+// CompatibleString 当前对象与版本号字符串是否兼容
+//
 // semver 规定主版本号相同的，在 API 层面必须兼容。
 func (v *SemVersion) CompatibleString(ver string) (bool, error) {
 	v2, err := SemVer(ver)
@@ -146,7 +151,7 @@ func SemVerCompatible(ver1, ver2 string) (bool, error) {
 	return v1.CompatibleString(ver2)
 }
 
-// SemVerValid 验证 semver 版本号是否符合 semver 规范。
+// SemVerValid 验证 semver 版本号是否符合 semver 规范
 func SemVerValid(ver string) bool {
 	v := &SemVersion{
 		Major: -1,
