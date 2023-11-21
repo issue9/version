@@ -9,9 +9,9 @@ import (
 	"github.com/issue9/errwrap"
 )
 
-// SemVersion 是 semver 的定义
+// SemVersion 是 [semver] 的定义
 //
-// 具体可参考：https://semver.org/lang/zh-CN/
+// [semver]: https://semver.org/lang/zh-CN/
 type SemVersion struct {
 	Major      int    `version:"0,.1"`
 	Minor      int    `version:"1,.2"`

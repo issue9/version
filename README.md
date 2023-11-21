@@ -1,9 +1,9 @@
 version
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fissue9%2Fversion%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/issue9/version/goto?ref=master)
+[![Test](https://github.com/issue9/version/actions/workflows/go.yml/badge.svg)](https://github.com/issue9/version/actions/workflows/go.yml)
 [![codecov](https://codecov.io/gh/issue9/version/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/version)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://opensource.org/licenses/MIT)
+![License](https://img.shields.io/github/license/issue9/version)
 [![Go version](https://img.shields.io/github/go-mod/go-version/issue9/version)](https://golang.org)
-[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/issue9/version)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/issue9/version)](https://pkg.go.dev/github.com/issue9/version)
 ======
 
 通过定义 struct tag 的相关属性，可以解析大部份版本号字符串到一个结构体中。
