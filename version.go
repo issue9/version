@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2016-2024 caixw
+//
 // SPDX-License-Identifier: MIT
 
 // Package version 是一个通用的版本号解析工具，可以一个版本号字符串解析到一个结构体中。
@@ -6,17 +8,19 @@
 // - index 该字段对应的的编号，也是默认的解析顺序(0 是入口)，只能为整数，唯一；
 // - route 表示当前字段的结束字符，以及对应的需要跳转到的索引值值。
 // 比如以下定义的结构体：
-//  type struct Version {
-//      Major int    `version:"0,.1,+2"`
-//      Minor int    `version:"1,.2"`
-//      Build string `version:"2"`
-//  }
+//
+//	type struct Version {
+//	    Major int    `version:"0,.1,+2"`
+//	    Minor int    `version:"1,.2"`
+//	    Build string `version:"2"`
+//	}
+//
 // 在解析时，首先会拿到索引为 0 的字段，也就是 Major，然后对字符串进行
 // 依次比较，如果碰到符号 `.` ，则将前面的字符串转换成数值保存 Major，
 // 然后跳到索引号为 1 的 Minor，再次对后续的字符串进行依次比较；若碰到
 // 的是字符 `+` 则跳到索引值为 2 的 Build 字段，依次对后续的字符进行比
 // 较；若碰到结尾了，而直接结束。
-// 具体的定义，可参考下自带的 SemVersion。
+// 具体的定义，可参考下自带的 [SemVersion]。
 package version
 
 import (
