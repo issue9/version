@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2016-2024 caixw
+// SPDX-FileCopyrightText: 2016-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -40,7 +40,7 @@ type field struct {
 }
 
 // Parse 解析版本号字符串到 obj 中
-func Parse(obj interface{}, ver string) error {
+func Parse(obj any, ver string) error {
 	fields, err := getFields(obj)
 	if err != nil {
 		return err
@@ -88,9 +88,9 @@ func Parse(obj interface{}, ver string) error {
 }
 
 // 将 obj 的所有可导出字段转换成 field 的描述形式，并以数组形式返回。
-func getFields(obj interface{}) (map[int]*field, error) {
+func getFields(obj any) (map[int]*field, error) {
 	v := reflect.ValueOf(obj)
-	if v.Kind() == reflect.Ptr {
+	if v.Kind() == reflect.Pointer {
 		v = v.Elem()
 	}
 

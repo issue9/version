@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2016-2024 caixw
+// SPDX-FileCopyrightText: 2016-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -48,11 +48,8 @@ func (v *SemVersion) Compare(v2 *SemVersion) int {
 
 	vReleases := strings.Split(v.PreRelease, ".")
 	v2Releases := strings.Split(v2.PreRelease, ".")
-	l := len(vReleases)
-	if len(v2Releases) < l {
-		l = len(v2Releases)
-	}
-	for i := 0; i < l; i++ {
+	l := min(len(v2Releases), len(vReleases))
+	for i := range l {
 		val := strings.Compare(vReleases[i], v2Releases[i])
 		if val == 0 { // 当前的所有字符相同，继续比较下个字符串
 			continue

@@ -1,8 +1,8 @@
 module github.com/issue9/version
 
 require (
-	github.com/issue9/assert/v4 v4.3.1
-	github.com/issue9/errwrap v0.3.3
+	github.com/issue9/assert/v5 v5.0.0
+	github.com/issue9/errwrap v0.4.0
 )
 
-go 1.17
+go 1.27.0
