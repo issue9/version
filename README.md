@@ -39,7 +39,7 @@ fmt.Println(semver)
 安装
 ----
 
-```shell
+```bash
 go get github.com/issue9/version
 ```
 
